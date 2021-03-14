@@ -32,17 +32,6 @@ class App extends React.Component<AppProps, AppState> {
       interval: null,
       color: { color: colors.WHITE }
     };
-    this.updateBreakLength = this.updateBreakLength.bind(this);
-    this.updateSessionLength = this.updateSessionLength.bind(this);
-    this.updateLength = this.updateLength.bind(this);
-    this.handlePlayPause = this.handlePlayPause.bind(this);
-    this.decrementCount = this.decrementCount.bind(this);
-    this.changeColor = this.changeColor.bind(this);
-    this.playAudioAlert = this.playAudioAlert.bind(this);
-    this.switchType = this.switchType.bind(this);
-    this.checkSwitch = this.checkSwitch.bind(this);
-    this.countdown = this.countdown.bind(this);
-    this.handleReset = this.handleReset.bind(this);
   }
 
   updateBreakLength(e: React.MouseEvent<HTMLButtonElement, globalThis.MouseEvent>): void {
@@ -183,12 +172,12 @@ class App extends React.Component<AppProps, AppState> {
           <TimeAdjuster
             type="Break"
             length={breakLength}
-            onChange={this.updateBreakLength}
+            onChange={(e) => this.updateBreakLength(e)}
           />
           <TimeAdjuster
             type="Session"
             length={sessionLength}
-            onChange={this.updateSessionLength}
+            onChange={(e) => this.updateSessionLength(e)}
           />
         </div>
 
@@ -197,8 +186,8 @@ class App extends React.Component<AppProps, AppState> {
 
           <Controls
             isCounting={isCounting}
-            onPlayPause={this.handlePlayPause}
-            onReset={this.handleReset}
+            onPlayPause={() => this.handlePlayPause()}
+            onReset={() => this.handleReset()}
           />
         </div>
 
