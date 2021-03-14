@@ -241,7 +241,7 @@ class App extends React.Component {
 
     return (
       <div className="App">
-        <h1 className="App-title"><i class="fab fa-react"></i> PomodoReact</h1>
+        <h1 className="App-title"><i className="fab fa-react"></i> PomodoReact</h1>
 
         <div className="settings">
           <TimeAdjuster
