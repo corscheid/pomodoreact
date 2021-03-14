@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { accurateInterval, BEEP_SOUND_URL } from './lib';
+import { accurateInterval, BEEP_SOUND_URL, colors } from './lib';
 import TimeAdjuster from './components/TimeAdjuster';
 import Clock from './components/Clock';
 import Controls from './components/Controls';
@@ -17,9 +17,6 @@ interface AppState {
   color: { color: string };
 }
 
-const RED: string = "#ff5252";
-const WHITE: string = "#ffffff";
-
 class App extends React.Component<AppProps, AppState> {
   appTitle: string = 'PomodoReact';
   audioBeep!: HTMLAudioElement | null;
@@ -33,7 +30,7 @@ class App extends React.Component<AppProps, AppState> {
       type: "Session",
       time: 1500,
       interval: null,
-      color: { color: WHITE }
+      color: { color: colors.WHITE }
     };
     this.updateBreakLength = this.updateBreakLength.bind(this);
     this.updateSessionLength = this.updateSessionLength.bind(this);
@@ -114,9 +111,9 @@ class App extends React.Component<AppProps, AppState> {
 
   changeColor(time: number): void {
     if (time < 61) {
-      this.setState({ color: { color: RED } });
+      this.setState({ color: { color: colors.RED } });
     } else {
-      this.setState({ color: { color: WHITE } });
+      this.setState({ color: { color: colors.WHITE } });
     }
   }
 
@@ -130,7 +127,7 @@ class App extends React.Component<AppProps, AppState> {
     this.setState({
       time: newTime,
       type: newType,
-      color: { color: WHITE }
+      color: { color: colors.WHITE }
     });
   }
 
@@ -166,7 +163,7 @@ class App extends React.Component<AppProps, AppState> {
       isCounting: false,
       type: "Session",
       time: 1500,
-      color: { color: WHITE }
+      color: { color: colors.WHITE }
     });
     if (this.audioBeep) {
       this.audioBeep.pause();

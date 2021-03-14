@@ -20,3 +20,8 @@ export const accurateInterval = function (fn: () => void, time: number): { cance
 };
 
 export const BEEP_SOUND_URL = "https://raw.githubusercontent.com/freeCodeCamp/cdn/master/build/testable-projects-fcc/audio/BeepSound.wav";
+
+export const colors = {
+  RED: "#ff5252",
+  WHITE: "#ffffff"
+}
