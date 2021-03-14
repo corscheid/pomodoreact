@@ -17,6 +17,9 @@ interface AppState {
   color: { color: string };
 }
 
+const RED: string = "#ff5252";
+const WHITE: string = "#ffffff";
+
 class App extends React.Component<AppProps, AppState> {
   appTitle: string = 'PomodoReact';
   audioBeep!: HTMLAudioElement | null;
@@ -30,7 +33,7 @@ class App extends React.Component<AppProps, AppState> {
       type: "Session",
       time: 1500,
       interval: null,
-      color: { color: "black" }
+      color: { color: WHITE }
     };
     this.updateBreakLength = this.updateBreakLength.bind(this);
     this.updateSessionLength = this.updateSessionLength.bind(this);
@@ -111,9 +114,9 @@ class App extends React.Component<AppProps, AppState> {
 
   changeColor(time: number): void {
     if (time < 61) {
-      this.setState({ color: { color: "red" } });
+      this.setState({ color: { color: RED } });
     } else {
-      this.setState({ color: { color: "black" } });
+      this.setState({ color: { color: WHITE } });
     }
   }
 
@@ -127,7 +130,7 @@ class App extends React.Component<AppProps, AppState> {
     this.setState({
       time: newTime,
       type: newType,
-      color: { color: "black" }
+      color: { color: WHITE }
     });
   }
 
@@ -163,7 +166,7 @@ class App extends React.Component<AppProps, AppState> {
       isCounting: false,
       type: "Session",
       time: 1500,
-      color: { color: "black" }
+      color: { color: WHITE }
     });
     if (this.audioBeep) {
       this.audioBeep.pause();
@@ -193,7 +196,7 @@ class App extends React.Component<AppProps, AppState> {
         </div>
 
         <div id="clock-container">
-          <Clock type={type} time={time} />
+          <Clock type={type} time={time} style={this.state.color} />
 
           <Controls
             isCounting={isCounting}

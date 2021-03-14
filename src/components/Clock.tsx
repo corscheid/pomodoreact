@@ -1,10 +1,11 @@
 interface ClockProps {
   type: string;
   time: number;
+  style: { color: string }
 }
 
 export default function Clock(props: ClockProps): JSX.Element {
-  let { type, time } = props;
+  let { type, time, style } = props;
   let minutes: number = Math.floor(time / 60);
   let seconds: number = Math.floor((time / 60 - minutes) * 60);
   let minutesStr: string;
@@ -25,7 +26,7 @@ export default function Clock(props: ClockProps): JSX.Element {
   return (
     <div className="Clock">
       <h2 id="timer-label">{type}</h2>
-      <div id="time-left">{`${minutesStr}:${secondsStr}`}</div>
+      <div id="time-left" style={style}>{`${minutesStr}:${secondsStr}`}</div>
     </div>
   );
 }
