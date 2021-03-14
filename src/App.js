@@ -1,96 +1,13 @@
 import React from 'react';
 
-// https://gist.github.com/AlexJWayne/1d99b3cd81d610ac7351
-const accurateInterval = function (fn, time) {
-  var cancel, nextAt, timeout, wrapper;
-  nextAt = new Date().getTime() + time;
-  timeout = null;
-  wrapper = function () {
-    nextAt += time;
-    timeout = setTimeout(wrapper, nextAt - new Date().getTime());
-    return fn();
-  };
-  cancel = function () {
-    return clearTimeout(timeout);
-  };
-  timeout = setTimeout(wrapper, nextAt - new Date().getTime());
-  return {
-    cancel: cancel
-  };
-};
-
-function TimeAdjuster({ type, length, onChange }) {
-  return (
-    <div className="TimeAdjuster">
-      <h2 id={`${type.toLowerCase()}-label`}>{type} Length</h2>
-
-      <div className="control-group">
-        <button
-          id={`${type.toLowerCase()}-decrement`}
-          className="btn"
-          onClick={onChange}
-          value="-"
-        >
-          <i className="fas fa-arrow-down"></i>
-        </button>
-
-        <div id={`${type.toLowerCase()}-length`}>{length}</div>
-
-        <button
-          id={`${type.toLowerCase()}-increment`}
-          className="btn"
-          onClick={onChange}
-          value="+"
-        >
-          <i className="fas fa-arrow-up"></i>
-        </button>
-      </div>
-    </div>
-  );
-}
-
-function Clock({ type, time }) {
-  let minutes = Math.floor(time / 60);
-  let seconds = Math.floor((time / 60 - minutes) * 60);
-
-  if (seconds < 10) {
-    seconds = "0" + seconds;
-  } else {
-    seconds = "" + seconds;
-  }
-
-  if (minutes < 10) {
-    minutes = "0" + minutes;
-  } else {
-    minutes = "" + minutes;
-  }
-
-  return (
-    <div className="Clock">
-      <h2 id="timer-label">{type}</h2>
-      <div id="time-left">{`${minutes}:${seconds}`}</div>
-    </div>
-  );
-}
-
-function Controls({ isCounting, onPlayPause, onReset }) {
-  return (
-    <div className="controls">
-      <button id="start_stop" className="btn" onClick={onPlayPause}>
-        {isCounting ? (
-          <i className="fas fa-pause"></i>
-        ) : (
-          <i className="fas fa-play"></i>
-        )}
-      </button>
-      <button id="reset" className="btn" onClick={onReset}>
-        <i className="fas fa-redo"></i>
-      </button>
-    </div>
-  );
-}
+import { accurateInterval, BEEP_SOUND_URL } from './lib';
+import TimeAdjuster from './components/TimeAdjuster';
+import Clock from './components/Clock';
+import Controls from './components/Controls';
 
 class App extends React.Component {
+  appTitle = 'PomodoReact';
+
   constructor(props) {
     super(props);
     this.state = {
@@ -241,7 +158,7 @@ class App extends React.Component {
 
     return (
       <div className="App">
-        <h1 className="App-title"><i className="fab fa-react"></i> PomodoReact</h1>
+        <h1 className="App-title"><i className="fab fa-react"></i> {this.appTitle}</h1>
 
         <div className="settings">
           <TimeAdjuster
@@ -272,7 +189,7 @@ class App extends React.Component {
           ref={(audio) => {
             this.audioBeep = audio;
           }}
-          src="https://raw.githubusercontent.com/freeCodeCamp/cdn/master/build/testable-projects-fcc/audio/BeepSound.wav"
+          src={BEEP_SOUND_URL}
         />
       </div>
     );
