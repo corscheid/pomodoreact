@@ -34,19 +34,19 @@ class App extends React.Component<AppProps, AppState> {
     };
   }
 
-  updateBreakLength(e: React.MouseEvent<HTMLButtonElement, globalThis.MouseEvent>): void {
+  updateBreakLength(event: React.MouseEvent<HTMLButtonElement, globalThis.MouseEvent>): void {
     this.updateLength(
       "breakLength",
-      e.currentTarget.value,
+      event.currentTarget.value,
       this.state.breakLength,
       "Break"
     );
   }
 
-  updateSessionLength(e: React.MouseEvent<HTMLButtonElement, globalThis.MouseEvent>): void {
+  updateSessionLength(event: React.MouseEvent<HTMLButtonElement, globalThis.MouseEvent>): void {
     this.updateLength(
       "sessionLength",
-      e.currentTarget.value,
+      event.currentTarget.value,
       this.state.sessionLength,
       "Session"
     );
@@ -172,12 +172,12 @@ class App extends React.Component<AppProps, AppState> {
           <TimeAdjuster
             type="Break"
             length={breakLength}
-            onChange={(e) => this.updateBreakLength(e)}
+            onChange={(event) => this.updateBreakLength(event)}
           />
           <TimeAdjuster
             type="Session"
             length={sessionLength}
-            onChange={(e) => this.updateSessionLength(e)}
+            onChange={(event) => this.updateSessionLength(event)}
           />
         </div>
 
