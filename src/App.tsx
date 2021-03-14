@@ -5,10 +5,23 @@ import TimeAdjuster from './components/TimeAdjuster';
 import Clock from './components/Clock';
 import Controls from './components/Controls';
 
-class App extends React.Component {
-  appTitle = 'PomodoReact';
+interface AppProps { }
 
-  constructor(props) {
+interface AppState {
+  breakLength: number;
+  sessionLength: number;
+  isCounting: boolean;
+  type: string;
+  time: number;
+  interval: any;
+  color: { color: string };
+}
+
+class App extends React.Component<AppProps, AppState> {
+  appTitle: string = 'PomodoReact';
+  audioBeep!: HTMLAudioElement | null;
+
+  constructor(props: AppProps) {
     super(props);
     this.state = {
       breakLength: 5,
@@ -17,7 +30,7 @@ class App extends React.Component {
       type: "Session",
       time: 1500,
       interval: null,
-      color: "black"
+      color: { color: "black" }
     };
     this.updateBreakLength = this.updateBreakLength.bind(this);
     this.updateSessionLength = this.updateSessionLength.bind(this);
@@ -32,7 +45,7 @@ class App extends React.Component {
     this.handleReset = this.handleReset.bind(this);
   }
 
-  updateBreakLength(e) {
+  updateBreakLength(e: React.MouseEvent<HTMLButtonElement, globalThis.MouseEvent>): void {
     this.updateLength(
       "breakLength",
       e.currentTarget.value,
@@ -41,7 +54,7 @@ class App extends React.Component {
     );
   }
 
-  updateSessionLength(e) {
+  updateSessionLength(e: React.MouseEvent<HTMLButtonElement, globalThis.MouseEvent>): void {
     this.updateLength(
       "sessionLength",
       e.currentTarget.value,
@@ -50,35 +63,39 @@ class App extends React.Component {
     );
   }
 
-  updateLength(stateAttribute, operation, currentLength, type) {
+  updateLength(stateAttribute: string, operation: string, currentLength: number, type: string): void {
     if (this.state.isCounting) return;
 
     if (operation === "+" && currentLength !== 60) {
       if (this.state.type === type) {
         this.setState({
+          ...this.state,
           [stateAttribute]: currentLength + 1,
           time: currentLength * 60 + 60
         });
       } else {
         this.setState({
+          ...this.state,
           [stateAttribute]: currentLength + 1
         });
       }
     } else if (operation === "-" && currentLength !== 1) {
       if (this.state.type === type) {
         this.setState({
+          ...this.state,
           [stateAttribute]: currentLength - 1,
           time: currentLength * 60 - 60
         });
       } else {
         this.setState({
+          ...this.state,
           [stateAttribute]: currentLength - 1
         });
       }
     }
   }
 
-  handlePlayPause() {
+  handlePlayPause(): void {
     if (!this.state.isCounting) {
       this.countdown();
       this.setState({ isCounting: true });
@@ -88,11 +105,11 @@ class App extends React.Component {
     }
   }
 
-  decrementCount() {
+  decrementCount(): void {
     this.setState({ time: this.state.time - 1 });
   }
 
-  changeColor(time) {
+  changeColor(time: number): void {
     if (time < 61) {
       this.setState({ color: { color: "red" } });
     } else {
@@ -100,13 +117,13 @@ class App extends React.Component {
     }
   }
 
-  playAudioAlert(time) {
-    if (time === 0) {
+  playAudioAlert(time: number): void {
+    if (this.audioBeep && time === 0) {
       this.audioBeep.play();
     }
   }
 
-  switchType(newTime, newType) {
+  switchType(newTime: number, newType: string): void {
     this.setState({
       time: newTime,
       type: newType,
@@ -114,7 +131,7 @@ class App extends React.Component {
     });
   }
 
-  checkSwitch() {
+  checkSwitch(): void {
     let { time } = this.state;
     this.changeColor(time);
     this.playAudioAlert(time);
@@ -130,7 +147,7 @@ class App extends React.Component {
     }
   }
 
-  countdown() {
+  countdown(): void {
     this.setState({
       interval: accurateInterval(() => {
         this.decrementCount();
@@ -139,21 +156,23 @@ class App extends React.Component {
     });
   }
 
-  handleReset() {
+  handleReset(): void {
     this.setState({
       breakLength: 5,
       sessionLength: 25,
       isCounting: false,
       type: "Session",
       time: 1500,
-      color: "black"
+      color: { color: "black" }
     });
-    this.audioBeep.pause();
-    this.audioBeep.currentTime = 0;
+    if (this.audioBeep) {
+      this.audioBeep.pause();
+      this.audioBeep.currentTime = 0;
+    }
     if (this.state.interval) this.state.interval.cancel();
   }
 
-  render() {
+  render(): JSX.Element {
     const { breakLength, sessionLength, type, time, isCounting } = this.state;
 
     return (

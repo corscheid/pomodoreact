@@ -1,4 +1,11 @@
-export default function Controls({ isCounting, onPlayPause, onReset }) {
+interface ControlsProps {
+  isCounting: boolean;
+  onPlayPause: () => void;
+  onReset: () => void;
+}
+
+export default function Controls(props: ControlsProps): JSX.Element {
+  let { isCounting, onPlayPause, onReset } = props;
   return (
     <div className="controls">
       <button id="start_stop" className="btn" onClick={onPlayPause}>

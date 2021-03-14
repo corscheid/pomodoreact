@@ -1,4 +1,13 @@
-export default function TimeAdjuster({ type, length, onChange }) {
+import React from 'react';
+
+interface TimeAdjusterProps {
+  type: string;
+  length: number;
+  onChange: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+}
+
+export default function TimeAdjuster(props: TimeAdjusterProps): JSX.Element {
+  let { type, length, onChange } = props;
   return (
     <div className="TimeAdjuster">
       <h2 id={`${type.toLowerCase()}-label`}>{type} Length</h2>

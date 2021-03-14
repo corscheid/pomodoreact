@@ -1,8 +1,10 @@
 // https://gist.github.com/AlexJWayne/1d99b3cd81d610ac7351
-export const accurateInterval = function (fn, time) {
-  var cancel, nextAt, timeout, wrapper;
+export const accurateInterval = function (fn: () => void, time: number): { cancel: () => void } {
+  let cancel: () => void;
+  let nextAt: number;
+  let timeout: NodeJS.Timeout;
+  let wrapper: () => void;
   nextAt = new Date().getTime() + time;
-  timeout = null;
   wrapper = function () {
     nextAt += time;
     timeout = setTimeout(wrapper, nextAt - new Date().getTime());
